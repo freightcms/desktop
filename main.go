@@ -8,6 +8,7 @@ import (
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
+	"github.com/freightcms/desktop/logging"
 )
 
 func closeTab(tabContainer *container.AppTabs, index int) {
