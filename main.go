@@ -77,7 +77,7 @@ func main() {
 
 	tabContainer := container.NewAppTabs(
 		NewTab("Home", func(tabName string) {
-			debugLogger.Printf("Tab name = %s\n", tabName)
+			logging.debugLogger.Printf("Tab name = %s\n", tabName)
 		}),
 	)
 
