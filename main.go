@@ -1,10 +1,14 @@
 package main
 
 import (
+	"fmt"
+	"runtime"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/driver/desktop"
+	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 	"github.com/freightcms/desktop/logging"
@@ -55,7 +59,9 @@ func main() {
 	)
 
 	appbar := container.NewBorder(nil, nil, nil, toolbar, nil)
-	body := container.NewBorder(appbar, widget.NewLabel("Put data here"), nil, nil, tabContainer)
+	detailsContainer := container.New(layout.NewCenterLayout(),
+		widget.NewLabel(fmt.Sprintf("Operating System: %s", runtime.GOOS)))
+	body := container.NewBorder(appbar, detailsContainer, nil, nil, tabContainer)
 
 	//
 	// setup short cuts
