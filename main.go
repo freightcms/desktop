@@ -65,6 +65,7 @@ func closeTab(tabContainer *container.AppTabs, index int) {
 //  3. Add the special "new tab" special case
 //  4. Select the newly created tab for the user
 func appendTab(tabContainer *container.AppTabs) {
+	logging.Logger.Debug("Appending Tab")
 	// TODO; we want to insert the new tab rather than just select it
 	tabToAdd := container.NewTabItemWithIcon("Home", theme.HomeIcon(), widget.NewLabel("Getting Started"))
 	items := tabContainer.Items
@@ -103,19 +104,29 @@ func main() {
 	main := container.New(layout.NewStackLayout(), tabContainer)
 
 	w.Canvas().AddShortcut(newTabShortcut, func(shortcut fyne.Shortcut) {
+		logging.Logger.Debug("New Tab Shortcut")
 		appendTab(tabContainer)
 	})
 	w.Canvas().AddShortcut(closeTabShortcut, func(shortcut fyne.Shortcut) {
+		logging.Logger.Debug("Close Tab Shortcut")
 		closeTab(tabContainer, tabContainer.SelectedIndex())
 		items := tabContainer.Items
 		if len(items) == 0 {
+			logging.Logger.Debug("Last tab closed. Closing Application")
 			w.Close()
 		}
 	})
 
+	logging.Logger.Debug("Setting Main Content")
 	w.SetContent(main)
+
+	logging.Logger.Debug("Resizing Application to 1024 x 768")
 	w.Resize(fyne.NewSize(1024, 768))
+
+	logging.Logger.Debug("Centering Application")
 	w.CenterOnScreen()
+
+	logging.Logger.Debug("Setting Application to Visibile")
 	w.Show()
 
 	a.Run()
