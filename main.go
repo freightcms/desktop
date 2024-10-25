@@ -11,6 +11,18 @@ import (
 	"github.com/freightcms/desktop/logging"
 )
 
+func NewTab(text string, action func(string)) *container.TabItem {
+	toolbar := widget.NewToolbar(
+		widget.NewToolbarAction(theme.HomeIcon(), func() {
+			action("home")
+		}),
+	)
+	// boostrap the "+" icon to make it so users to create a new tab
+	tabLayout := container.New(layout.NewVBoxLayout(), toolbar)
+	item := container.NewTabItem(text, tabLayout)
+	return item
+}
+
 func closeTab(tabContainer *container.AppTabs, index int) {
 	logging.Logger.Debug("Closing Tab")
 	items := tabContainer.Items
