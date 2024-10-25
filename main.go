@@ -5,23 +5,10 @@ import (
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/driver/desktop"
-	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 	"github.com/freightcms/desktop/logging"
 )
-
-func NewTab(text string, action func(string)) *container.TabItem {
-	toolbar := widget.NewToolbar(
-		widget.NewToolbarAction(theme.HomeIcon(), func() {
-			action("home")
-		}),
-	)
-	// boostrap the "+" icon to make it so users to create a new tab
-	tabLayout := container.New(layout.NewVBoxLayout(), toolbar)
-	item := container.NewTabItem(text, tabLayout)
-	return item
-}
 
 func closeTab(tabContainer *container.AppTabs, index int) {
 	logging.Logger.Debug("Closing Tab")
@@ -58,18 +45,17 @@ func main() {
 	a := app.New()
 	w := a.NewWindow("Freight CMS")
 
-	tabContainer := container.NewAppTabs(
-		NewTab("Home", func(tabName string) {
-			// TODO: do something
+	tabContainer := container.NewAppTabs()
+	appendTab(tabContainer)
+
+	toolbar := widget.NewToolbar(
+		widget.NewToolbarAction(theme.AccountIcon(), func() {
+			logging.Logger.Debug("User Clicked Account. Not Implemented.")
 		}),
 	)
 
-	toolbar := widget.NewToolbar(
-		widget.NewToolbarAction(theme.LoginIcon(), func() {
-			logging.Logger.Debug("User Clicked Login. Not Implemented.")
-		}),
-	)
-	main := container.New(layout.NewVBoxLayout(), toolbar, widget.NewSeparator(), tabContainer)
+	appbar := container.NewBorder(nil, nil, nil, toolbar, nil)
+	body := container.NewBorder(appbar, widget.NewLabel("Put data here"), nil, nil, tabContainer)
 
 	//
 	// setup short cuts
@@ -89,7 +75,7 @@ func main() {
 	})
 
 	logging.Logger.Debug("Setting Main Content")
-	w.SetContent(main)
+	w.SetContent(body)
 
 	logging.Logger.Debug("Resizing Application to 1024 x 768")
 	w.Resize(fyne.NewSize(1024, 768))
