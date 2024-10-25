@@ -2,7 +2,10 @@ module githubc.om/freightcms/desktop
 
 go 1.22.4
 
-require fyne.io/fyne/v2 v2.5.1
+require (
+	fyne.io/fyne/v2 v2.5.1
+	github.com/freightcms/logging v0.0.0-20241025015227-1c8114cb08fc
+)
 
 require (
 	fyne.io/systray v1.11.0 // indirect

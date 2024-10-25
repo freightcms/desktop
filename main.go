@@ -12,6 +12,7 @@ import (
 )
 
 func closeTab(tabContainer *container.AppTabs, index int) {
+	logging.Logger.Debug("Closing Tab")
 	items := tabContainer.Items
 	selectedIndex := tabContainer.SelectedIndex()
 	if index >= len(items) {
@@ -77,7 +78,7 @@ func main() {
 
 	tabContainer := container.NewAppTabs(
 		NewTab("Home", func(tabName string) {
-			logging.debugLogger.Printf("Tab name = %s\n", tabName)
+			// TODO: do something
 		}),
 	)
 

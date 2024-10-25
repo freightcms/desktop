@@ -1,4 +1,4 @@
-package main
+package pages
 
 import (
 	"fyne.io/fyne/v2"
@@ -11,7 +11,7 @@ import (
 func NewHomePage() *fyne.Container {
 	homePageLayout := layout.NewGridLayoutWithColumns(4)
 	orgWidget := widget.NewButtonWithIcon("Organizations", theme.HomeIcon(), func() {
-		debugLogger.Printf("Clicked on the Organization Tile\n")
+		// debugLogger.Printf("Clicked on the Organization Tile\n")
 	})
 	return container.New(
 		homePageLayout,
