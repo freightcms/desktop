@@ -12,6 +12,7 @@ import (
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 	"github.com/freightcms/desktop/logging"
+	"github.com/freightcms/desktop/views"
 )
 
 func closeTab(tabContainer *container.AppTabs, index int) {
@@ -29,12 +30,14 @@ func closeTab(tabContainer *container.AppTabs, index int) {
 func appendTab(tabContainer *container.AppTabs) {
 	logging.Logger.Debug("Appending Tab")
 	// TODO; we want to insert the new tab rather than just select it
-	tabToAdd := container.NewTabItemWithIcon("Home", theme.HomeIcon(), widget.NewLabel("Getting Started"))
+	tabToAdd := container.NewTabItemWithIcon("Home", theme.HomeIcon(), views.NewHomePage())
 	tabContainer.Append(tabToAdd)
 	tabContainer.SelectIndex(len(tabContainer.Items) - 1)
 }
 
 var (
+	desktopApp     fyne.App
+	tabContainer   *container.AppTabs
 	newTabShortcut = &desktop.CustomShortcut{
 		KeyName:  fyne.KeyN,
 		Modifier: fyne.KeyModifierControl,
@@ -43,20 +46,19 @@ var (
 		KeyName:  fyne.KeyW,
 		Modifier: fyne.KeyModifierControl,
 	}
-)
-
-func main() {
-	a := app.New()
-	w := a.NewWindow("Freight CMS")
-
-	tabContainer := container.NewAppTabs()
-	appendTab(tabContainer)
-
-	toolbar := widget.NewToolbar(
+	toolbar = widget.NewToolbar(
 		widget.NewToolbarAction(theme.AccountIcon(), func() {
 			logging.Logger.Debug("User Clicked Account. Not Implemented.")
 		}),
 	)
+)
+
+func main() {
+	desktopApp = app.New()
+	w := desktopApp.NewWindow("Freight CMS")
+
+	tabContainer = container.NewAppTabs()
+	appendTab(tabContainer)
 
 	appbar := container.NewBorder(nil, nil, nil, toolbar, nil)
 	detailsContainer := container.New(layout.NewCenterLayout(),
@@ -92,5 +94,5 @@ func main() {
 	logging.Logger.Debug("Setting Application to Visibile")
 	w.Show()
 
-	a.Run()
+	desktopApp.Run()
 }
