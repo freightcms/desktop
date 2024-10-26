@@ -6,16 +6,16 @@ import (
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
-	"github.com/freightcms/desktop/logging"
+	_ "github.com/freightcms/desktop/logging"
 )
 
 func NewHomePage() *fyne.Container {
 	homePageLayout := layout.NewGridLayoutWithColumns(4)
-	orgWidget := widget.NewButtonWithIcon("Organizations", theme.HomeIcon(), func() {
-		logging.Logger.Debug("Clicked Organization Button Tile")
-	})
+	organizationCard := widget.NewCard("Organizations", "Manage", widget.NewIcon(theme.SettingsIcon()))
+
 	return container.New(
 		homePageLayout,
-		orgWidget,
+		container.NewCenter(
+			container.New(homePageLayout, organizationCard)),
 	)
 }
