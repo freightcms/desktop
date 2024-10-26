@@ -1,11 +1,15 @@
-module github.com/freightcms/desktop/pages
+module github.com/freightcms/desktop/views
 
 go 1.22.4
 
-require fyne.io/fyne/v2 v2.5.2
+require (
+	fyne.io/fyne/v2 v2.5.2
+	github.com/freightcms/desktop/logging v0.0.0-20241025181419-5d5fe82ebecf
+)
 
 require (
 	github.com/fredbi/uri v1.1.0 // indirect
+	github.com/freightcms/logging v0.0.0-20241025015227-1c8114cb08fc // indirect
 	github.com/fyne-io/gl-js v0.0.0-20220119005834-d2da28d9ccfe // indirect
 	github.com/go-gl/gl v0.0.0-20211210172815-726fda9656d6 // indirect
 	github.com/go-text/render v0.2.0 // indirect

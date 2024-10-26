@@ -6,12 +6,13 @@ import (
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
+	"github.com/freightcms/desktop/logging"
 )
 
 func NewHomePage() *fyne.Container {
 	homePageLayout := layout.NewGridLayoutWithColumns(4)
 	orgWidget := widget.NewButtonWithIcon("Organizations", theme.HomeIcon(), func() {
-		// debugLogger.Printf("Clicked on the Organization Tile\n")
+		logging.Logger.Debug("Clicked Organization Button Tile")
 	})
 	return container.New(
 		homePageLayout,
