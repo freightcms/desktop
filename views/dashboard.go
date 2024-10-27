@@ -3,20 +3,8 @@ package views
 import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
-	_ "fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
-)
-
-type AppNavigationOptions int
-
-const (
-	HomeNavigationOption          AppNavigationOptions = 1 << iota
-	LoginNavigationOption                              = 2
-	LogoutNavigationOption                             = 4
-	SettingsNavigationOption                           = 8
-	OrganizationsNavigationOption                      = 16
-	AccountSettingsOption                              = 32
 )
 
 func NewHomePage(onNavigation func(selected AppNavigationOptions)) *fyne.Container {
@@ -24,6 +12,9 @@ func NewHomePage(onNavigation func(selected AppNavigationOptions)) *fyne.Contain
 		container.NewCenter(
 			container.NewGridWithColumns(4,
 				container.NewPadded(
+					widget.NewButtonWithIcon("Account", theme.AccountIcon(), func() {
+						onNavigation(SettingsNavigationOption)
+					}),
 					widget.NewButtonWithIcon("Organizations", theme.HomeIcon(), func() {
 						onNavigation(OrganizationsNavigationOption)
 					}),
