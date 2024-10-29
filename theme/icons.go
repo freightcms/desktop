@@ -8,6 +8,7 @@ import (
 type CustomIconName string
 
 const (
+	HomeIconName             CustomIconName = "./assets/icons/icons8-home-48.png"
 	SettingsIconName         CustomIconName = "./assets/icons/icons8-settings-48.png"
 	UserGroupIconName        CustomIconName = "./assets/icon/icons8-add-user-group-woman-man-48.png"
 	EditIconName             CustomIconName = "./assets/icon/icons-8-edit-48.png"
@@ -106,4 +107,8 @@ func SortingIcon() fyne.Resource {
 
 func ThumbnailsIcon() fyne.Resource {
 	return resourceFromPathOrFallback(ThumbnailsIconName, ft.QuestionIcon())
+}
+
+func HomeIcon() fyne.Resource {
+	return resourceFromPathOrFallback(HomeIconName, ft.HomeIcon())
 }

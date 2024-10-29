@@ -9,9 +9,9 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/layout"
-	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 	"github.com/freightcms/desktop/logging"
+	"github.com/freightcms/desktop/theme"
 	"github.com/freightcms/desktop/views"
 )
 
@@ -51,7 +51,7 @@ var (
 		Modifier: fyne.KeyModifierControl,
 	}
 	toolbar = widget.NewToolbar(
-		widget.NewToolbarAction(theme.AccountIcon(), func() {
+		widget.NewToolbarAction(theme.LoginAsUserIcon(), func() {
 			logging.Logger.Debug("User Clicked Account. Not Implemented.")
 		}),
 	)
