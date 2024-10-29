@@ -15,6 +15,10 @@ import (
 	"github.com/freightcms/desktop/views"
 )
 
+func handleNavigation(page views.AppNavigationOptions) {
+	logging.Logger.Debug("Navigation to %d", page)
+}
+
 func closeTab(tabContainer *container.AppTabs, index int) {
 	logging.Logger.Debug("Closing Tab")
 	tabContainer.RemoveIndex(index)
@@ -30,7 +34,7 @@ func closeTab(tabContainer *container.AppTabs, index int) {
 func appendTab(tabContainer *container.AppTabs) {
 	logging.Logger.Debug("Appending Tab")
 	// TODO; we want to insert the new tab rather than just select it
-	tabToAdd := container.NewTabItemWithIcon("Home", theme.HomeIcon(), views.NewHomePage())
+	tabToAdd := container.NewTabItemWithIcon("Home", theme.HomeIcon(), views.NewHomePage(handleNavigation))
 	tabContainer.Append(tabToAdd)
 	tabContainer.SelectIndex(len(tabContainer.Items) - 1)
 }
