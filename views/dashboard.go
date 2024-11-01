@@ -11,17 +11,15 @@ func NewHomePage(onNavigation func(selected AppNavigationOptions)) *fyne.Contain
 	return container.NewPadded(
 		container.NewCenter(
 			container.NewGridWithColumns(4,
-				container.NewPadded(
-					widget.NewButtonWithIcon("Account", theme.LoginAsUserIcon(), func() {
-						onNavigation(SettingsNavigationOption)
-					}),
-					widget.NewButtonWithIcon("Organizations", theme.OrganizationIcon(), func() {
-						onNavigation(OrganizationsNavigationOption)
-					}),
-					widget.NewButtonWithIcon("Settings", theme.SettingsIcon(), func() {
-						onNavigation(SettingsNavigationOption)
-					}),
-				),
+				widget.NewButtonWithIcon("Account", theme.LoginAsUserIcon(), func() {
+					onNavigation(SettingsNavigationOption)
+				}),
+				widget.NewButtonWithIcon("Organizations", theme.OrganizationIcon(), func() {
+					onNavigation(OrganizationsNavigationOption)
+				}),
+				widget.NewButtonWithIcon("Settings", theme.SettingsIcon(), func() {
+					onNavigation(SettingsNavigationOption)
+				}),
 			),
 		),
 	)
