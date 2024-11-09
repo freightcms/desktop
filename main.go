@@ -16,7 +16,14 @@ import (
 )
 
 func handleNavigation(page views.AppNavigationOptions) {
-	logging.Logger.Debug("Navigation to %d", page)
+	if page == views.OrganizationsNavigationOption {
+		item := tabContainer.Selected()
+		item.Text = "Organizations"
+		item.Icon = theme.OrganizationIcon()
+		item.Content = views.OrganizationListView()
+	} else {
+		logging.Logger.Debug("Navigation to %d", page)
+	}
 }
 
 func closeTab(tabContainer *container.AppTabs, index int) {
@@ -55,12 +62,13 @@ var (
 			logging.Logger.Debug("User Clicked Account. Not Implemented.")
 		}),
 	)
-	navbar = views.Navbar(handleNavigation)
+	navbar     = views.Navbar(handleNavigation)
+	mainWindow fyne.Window
 )
 
 func main() {
 	desktopApp = app.New()
-	w := desktopApp.NewWindow("Freight CMS")
+	mainWindow := desktopApp.NewWindow("Freight CMS")
 
 	tabContainer = container.NewAppTabs()
 	appendTab(tabContainer)
@@ -73,31 +81,31 @@ func main() {
 	//
 	// setup short cuts
 	// these need to be after the fact because we reference the unboxed variable tabContaine
-	w.Canvas().AddShortcut(newTabShortcut, func(shortcut fyne.Shortcut) {
+	mainWindow.Canvas().AddShortcut(newTabShortcut, func(shortcut fyne.Shortcut) {
 		logging.Logger.Debug("New Tab Shortcut")
 		appendTab(tabContainer)
 	})
-	w.Canvas().AddShortcut(closeTabShortcut, func(shortcut fyne.Shortcut) {
+	mainWindow.Canvas().AddShortcut(closeTabShortcut, func(shortcut fyne.Shortcut) {
 		logging.Logger.Debug("Close Tab Shortcut")
 		closeTab(tabContainer, tabContainer.SelectedIndex())
 		items := tabContainer.Items
 		if len(items) == 0 {
 			logging.Logger.Debug("Last tab closed. Closing Application")
-			w.Close()
+			mainWindow.Close()
 		}
 	})
 
 	logging.Logger.Debug("Setting Main Content")
-	w.SetContent(body)
+	mainWindow.SetContent(body)
 
 	logging.Logger.Debug("Resizing Application to 1024 x 768")
-	w.Resize(fyne.NewSize(1024, 768))
+	mainWindow.Resize(fyne.NewSize(1024, 768))
 
 	logging.Logger.Debug("Centering Application")
-	w.CenterOnScreen()
+	mainWindow.CenterOnScreen()
 
 	logging.Logger.Debug("Setting Application to Visibile")
-	w.Show()
+	mainWindow.Show()
 
 	desktopApp.Run()
 }
