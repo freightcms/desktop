@@ -34,7 +34,7 @@ func closeTab(tabContainer *container.AppTabs, index int) {
 func appendTab(tabContainer *container.AppTabs) {
 	logging.Logger.Debug("Appending Tab")
 	// TODO; we want to insert the new tab rather than just select it
-	tabToAdd := container.NewTabItemWithIcon("Home", theme.HomeIcon(), views.NewHomePage(handleNavigation))
+	tabToAdd := container.NewTabItemWithIcon("Home", theme.HomeIcon(), views.WelcomeView())
 	tabContainer.Append(tabToAdd)
 	tabContainer.SelectIndex(len(tabContainer.Items) - 1)
 }
@@ -55,6 +55,7 @@ var (
 			logging.Logger.Debug("User Clicked Account. Not Implemented.")
 		}),
 	)
+	navbar = views.Navbar(handleNavigation)
 )
 
 func main() {
@@ -67,7 +68,7 @@ func main() {
 	appbar := container.NewBorder(nil, nil, nil, toolbar, nil)
 	detailsContainer := container.New(layout.NewCenterLayout(),
 		widget.NewLabel(fmt.Sprintf("Operating System: %s", runtime.GOOS)))
-	body := container.NewBorder(appbar, detailsContainer, nil, nil, tabContainer)
+	body := container.NewBorder(appbar, detailsContainer, navbar, nil, tabContainer)
 
 	//
 	// setup short cuts
