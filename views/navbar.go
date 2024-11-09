@@ -7,7 +7,7 @@ import (
 	"github.com/freightcms/desktop/theme"
 )
 
-func NewHomePage(onNavigation func(selected AppNavigationOptions)) *fyne.Container {
+func Navbar(onNavigation func(selected AppNavigationOptions)) *fyne.Container {
 	return container.NewPadded(
 		container.NewCenter(
 			container.NewGridWithColumns(4,
