@@ -8,19 +8,17 @@ import (
 )
 
 func Navbar(onNavigation func(selected AppNavigationOptions)) *fyne.Container {
-	return container.NewPadded(
-		container.NewCenter(
-			container.NewGridWithColumns(4,
-				widget.NewButtonWithIcon("Account", theme.LoginAsUserIcon(), func() {
-					onNavigation(SettingsNavigationOption)
-				}),
-				widget.NewButtonWithIcon("Organizations", theme.OrganizationIcon(), func() {
-					onNavigation(OrganizationsNavigationOption)
-				}),
-				widget.NewButtonWithIcon("Settings", theme.SettingsIcon(), func() {
-					onNavigation(SettingsNavigationOption)
-				}),
-			),
-		),
-	)
+	buttons := []fyne.CanvasObject{
+		widget.NewButtonWithIcon("Account", theme.LoginAsUserIcon(), func() {
+			onNavigation(SettingsNavigationOption)
+		}),
+		widget.NewButtonWithIcon("Organizations", theme.OrganizationIcon(), func() {
+			onNavigation(OrganizationsNavigationOption)
+		}),
+		widget.NewButtonWithIcon("Settings", theme.SettingsIcon(), func() {
+			onNavigation(SettingsNavigationOption)
+		}),
+	}
+
+	return container.NewStack(buttons...)
 }
