@@ -81,6 +81,8 @@ github.com/freightcms/desktop/logging v0.0.0-20241025181419-5d5fe82ebecf h1:rXW9
 github.com/freightcms/desktop/logging v0.0.0-20241025181419-5d5fe82ebecf/go.mod h1:yOWBAtZG33IPBlEsBWxTp32q5UYPp1hR4yuriWpYriQ=
 github.com/freightcms/desktop/logging v0.0.0-20241026131313-1699b6fba0bd h1:W/27D/lNcGktcxM+QhMwfK5fbuCAaLmSnFeEwfoDEHU=
 github.com/freightcms/desktop/logging v0.0.0-20241026131313-1699b6fba0bd/go.mod h1:yOWBAtZG33IPBlEsBWxTp32q5UYPp1hR4yuriWpYriQ=
+github.com/freightcms/desktop/theme v0.0.0-20241101014345-59ec8a05c881 h1:Q23QerpOqWQA562Lh1n8cg4pZwQ5ljygdfyGbgUhXLo=
+github.com/freightcms/desktop/theme v0.0.0-20241101014345-59ec8a05c881/go.mod h1:EJadZ4YvMtJhxdU8oXkV7CS9J3jA43MrmiUgwjU4B20=
 github.com/freightcms/desktop/views v0.0.0-20241026131313-1699b6fba0bd h1:eBrdKjyo/eTySFV7SZl13PTm4pwpDLA7qCGR367g2Fo=
 github.com/freightcms/desktop/views v0.0.0-20241026131313-1699b6fba0bd/go.mod h1:LEC+ObFVhjwoMprdfABTNIKhdHthISlszuQ6uGUajzo=
 github.com/freightcms/logging v0.0.0-20241025015227-1c8114cb08fc h1:JZYAlFKgq74Pd4Z6H1G0VgxoewzxLcHr+4sgur1PwaA=

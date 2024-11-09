@@ -5,6 +5,7 @@ go 1.22.4
 require (
 	fyne.io/fyne/v2 v2.5.2
 	github.com/freightcms/desktop/logging v0.0.0-20241026131313-1699b6fba0bd
+	github.com/freightcms/desktop/theme v0.0.0-20241101014345-59ec8a05c881
 	github.com/freightcms/desktop/views v0.0.0-20241026131313-1699b6fba0bd
 	github.com/freightcms/logging v0.0.0-20241025015227-1c8114cb08fc
 )
