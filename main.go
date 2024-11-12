@@ -4,15 +4,15 @@ import (
 	"fmt"
 	"runtime"
 
+	"desktop/logging"
+	"desktop/theme"
+	"desktop/views"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
-	"github.com/freightcms/desktop/logging"
-	"github.com/freightcms/desktop/theme"
-	"github.com/freightcms/desktop/views"
 )
 
 func handleNavigation(page views.AppNavigationOptions) {
