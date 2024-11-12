@@ -21,9 +21,13 @@ func Navbar(onNavigation func(selected AppNavigationOptions)) *fyne.Container {
 		newButtonWithIcon("Account", theme.LoginAsUserIcon(), func() {
 			onNavigation(AccountSettingsOption)
 		}, widget.ButtonAlignLeading),
-		newButtonWithIcon("Organizations", theme.OrganizationIcon(), func() {
-			onNavigation(OrganizationsNavigationOption)
-		}, widget.ButtonAlignLeading),
+		widget.NewAccordion(
+			widget.NewAccordionItem("Organizations",
+				newButtonWithIcon("Organizations", theme.OrganizationIcon(), func() {
+					onNavigation(OrganizationsNavigationOption)
+				}, widget.ButtonAlignLeading),
+			),
+		),
 		newButtonWithIcon("Settings", theme.SettingsIcon(), func() {
 			onNavigation(SettingsNavigationOption)
 		}, widget.ButtonAlignLeading),
