@@ -69,7 +69,7 @@ var (
 
 func main() {
 	desktopApp = app.New()
-	mainWindow := desktopApp.NewWindow("Freight CMS")
+	mainWindow = desktopApp.NewWindow("Freight CMS")
 
 	tabContainer = container.NewAppTabs()
 	appendTab(tabContainer)
