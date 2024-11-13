@@ -7,6 +7,7 @@ import (
 	"desktop/logging"
 	"desktop/theme"
 	"desktop/views"
+	"desktop/views/organizations"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
@@ -20,7 +21,7 @@ func handleNavigation(page views.AppNavigationOptions) {
 		item := tabContainer.Selected()
 		item.Text = "Organizations"
 		item.Icon = theme.OrganizationIcon()
-		item.Content = views.OrganizationListView()
+		item.Content = organizations.ListView()
 	} else {
 		logging.Logger.Debug("Navigation to %d", page)
 	}

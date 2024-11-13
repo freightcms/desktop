@@ -1,4 +1,4 @@
-package views
+package organizations
 
 import (
 	"desktop/logging"
@@ -9,7 +9,20 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func OrganizationListView() *fyne.Container {
+func Table() fyne.CanvasObject {
+	tbl := widget.NewTableWithHeaders(func() (rows, cols int) {
+		return 0, 0
+	}, func() fyne.CanvasObject {
+		return widget.NewLabel("Hello World")
+	}, func(i widget.TableCellID, o fyne.CanvasObject) {
+		o.(*widget.Label).SetText("Hello form the other side")
+	})
+
+	return tbl
+}
+
+// ListView creates a new view where all the organizations appear in a list and can be searched
+func ListView() *fyne.Container {
 	searchSection := container.NewHBox(
 		widget.NewEntry(),
 		widget.NewButtonWithIcon("Search", theme.InspectionIcon(), func() {
