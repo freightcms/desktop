@@ -7,7 +7,7 @@ type (
 		DBA      string
 		RollupID string
 	}
-	CreateOrganization struct {
+	UpsertOrganization struct {
 		Name     string
 		DBA      *string
 		RollupID *string
@@ -17,6 +17,6 @@ type (
 		Get(criteria interface{}, fields []string)
 		Delete(id interface{})
 		Update(id interface{}, org Organization) error
-		Create(org CreateOrganization) (id interface{})
+		Create(org UpsertOrganization) (id interface{})
 	}
 )
