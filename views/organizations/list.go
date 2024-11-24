@@ -1,35 +1,75 @@
 package organizations
 
 import (
+	"desktop/clients/web"
 	"desktop/logging"
-	"desktop/services"
+	"desktop/theme"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/data/binding"
-	"fyne.io/fyne/v2/theme"
+	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 )
 
 func NewTable() fyne.CanvasObject {
-	var service services.OrganizationService
-	data := service.Get(nil, []string{}) 
+	orgClient := web.NewOrganizationService()
+	data := orgClient.Get(nil, []string{}) 
 	length := func() (rows, cols int) {
 		return len(data), 4
 	}
-	fieldNameMap := map[int]string {
-		0: "id",
-		1: "name",
-		2: "dba",
-		3: "rollupID",
-	}
 	createCellTemplate := func() fyne.CanvasObject {
-		return widget.NewLabel("a row")
+		return container.New(
+			layout.NewCenterLayout(),
+			nil,
+		)
 	}
 	updateCell := func(i widget.TableCellID, cell fyne.CanvasObject) {
 		record := data[i.Row]
-		cellData := record[fieldNameMap[i.Col]]
-		cell.(*widget.Label).SetText(cellData)
+		var label *widget.Label
+		switch i.Col {
+			case 0:
+				label = widget.NewLabel(record.ID)
+				cell.(*fyne.Container).Add(label)
+				break
+			case 1:
+				label = widget.NewLabel(record.Name)
+				cell.(*fyne.Container).Add(label)
+				break 
+			case 2:
+				if record.DBA == nil { 
+					label = widget.NewLabel("")
+					cell.(*fyne.Container).Add(label)
+				} else {
+					label = widget.NewLabel(*record.DBA)
+					cell.(*fyne.Container).Add(label)
+				}
+				break
+			case 3:
+				if record.RollupID == nil { 
+					label = widget.NewLabel("")
+					cell.(*fyne.Container).Add(label)
+				} else {
+					label = widget.NewLabel(*record.RollupID)
+					cell.(*fyne.Container).Add(label)
+				}
+				cell.(*fyne.Container).Add(label)
+				break
+			case 4:
+				actionButtons := container.NewHBox(
+					widget.NewButtonWithIcon("Edit", theme.EditIcon(), func() {
+						logging.Logger.Debug("Clicked edit button in row")
+					}), 
+					widget.NewButtonWithIcon("Delete", theme.RemoveIcon(), func() {
+						logging.Logger.Debug("Delete icon clicked")
+					}),
+				)
+				cell.(*fyne.Container).Add(actionButtons)
+				break
+			default:
+				break
+
+		}
 	}
 	tbl := widget.NewTableWithHeaders(length, createCellTemplate, updateCell)
 	// 	tbl.OnSelected = func(i widget.TableCellID) {
@@ -72,10 +112,10 @@ func ListView() *fyne.Container {
 		nil,
 		nil,
 		container.NewHBox(
-			widget.NewButtonWithIcon("Previous", theme.NavigateBackIcon(), func() {
+			widget.NewButtonWithIcon("Previous", theme.RetateLeftIcon(), func() {
 				logging.Logger.Debug("Clicking Previous")
 			}),
-			widget.NewButtonWithIcon("Next", theme.NavigateNextIcon(), func() {
+			widget.NewButtonWithIcon("Next", theme.RetateRightIcon(), func() {
 				logging.Logger.Debug("Clicking Next")
 			}),
 		),
