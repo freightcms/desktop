@@ -2,67 +2,42 @@ package organizations
 
 import (
 	"desktop/logging"
-	"fmt"
+	"desktop/services"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/data/binding"
-	"fyne.io/fyne/v2/layout"
+	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 )
 
-type OrganizationItemViewModel struct {
-}
-
-type OrganizationTableViewModel struct {
-	page     int
-	pageSize int
-	sortBy   string
-	items    []*OrganizationItemViewModel
-}
-
-func NewOrganizationTableViewModel() *OrganizationTableViewModel {
-	return &OrganizationTableViewModel{
-		page:     0,
-		pageSize: 10,
-		sortBy:   "id",
-		items:    []*OrganizationItemViewModel{},
+func NewTable() fyne.CanvasObject {
+	var service services.OrganizationService
+	data := service.Get(nil, []string{}) 
+	length := func() (rows, cols int) {
+		return len(data), 4
 	}
-}
-
-// Length gets the number of records available
-func (v *OrganizationTableViewModel) Length() int {
-	return len(v.items)
-}
-
-// At gets the organization view item at the index specified. If the index is out of bounds
-// of the array then the function returns `nil`, and `false`. If the index somehow fetches
-// a `nil` value from the items then it will return `nil` and `false` as the item was
-// present in the array but stores as `nil`
-func (v *OrganizationTableViewModel) At(i int) (*OrganizationItemViewModel, bool) {
-	if i < 0 || i > len(v.items) {
-		return nil, false
+	fieldNameMap := map[int]string {
+		0: "id",
+		1: "name",
+		2: "dba",
+		3: "rollupID",
 	}
-	item := v.items[i]
-	return item, item != nil
-}
-
-func NewTable(vm *OrganizationTableViewModel) fyne.CanvasObject {
-	headers := []string{"ID", "Name", "DBA", "Rollup ID"}
-	tbl := widget.NewTableWithHeaders(func() (rows, cols int) {
-		return vm.Length(), 4
-	}, func() fyne.CanvasObject {
-		return widget.NewLabel("Hello World")
-	}, func(i widget.TableCellID, o fyne.CanvasObject) {
-		if i.Row == 0 {
-			o.(*widget.Label).SetText(headers[i.Col])
-			return
-		}
-		data, ok := vm.At(i.Row)
-		if ok {
-			o.(*widget.Label).SetText(fmt.Sprintf("Row %d, Col %d"))
-		}
-	})
+	createCellTemplate := func() fyne.CanvasObject {
+		return widget.NewLabel("a row")
+	}
+	updateCell := func(i widget.TableCellID, cell fyne.CanvasObject) {
+		record := data[i.Row]
+		cellData := record[fieldNameMap[i.Col]]
+		cell.(*widget.Label).SetText(cellData)
+	}
+	tbl := widget.NewTableWithHeaders(length, createCellTemplate, updateCell)
+	// 	tbl.OnSelected = func(i widget.TableCellID) {
+	// 		logging.Logger.Debug("Selected row %d, column %d", i.Row, i.Col)
+	// 	}
+	// 	tbl.OnUnselected = func(i widget.TableCellID) {
+	// 		logging.Logger.Debug("UnSelected row %d, column %d", i.Row, i.Col)
+	// 	}
 
 	return tbl
 }
@@ -91,12 +66,30 @@ func NewSearchForm() fyne.CanvasObject {
 
 // ListView creates a new view where all the organizations appear in a list and can be searched
 func ListView() *fyne.Container {
-	form := NewSearchForm()
-	table := NewTable()
-	innerLayout := container.NewBorder(form, nil, nil, nil, table)
-	l := container.New(
-		layout.NewPaddedLayout(),
-		innerLayout,
+
+	navigationButtons := container.NewBorder(
+		nil,
+		nil,
+		nil,
+		container.NewHBox(
+			widget.NewButtonWithIcon("Previous", theme.NavigateBackIcon(), func() {
+				logging.Logger.Debug("Clicking Previous")
+			}),
+			widget.NewButtonWithIcon("Next", theme.NavigateNextIcon(), func() {
+				logging.Logger.Debug("Clicking Next")
+			}),
+		),
+		nil,
+	)
+	l := container.NewBorder(
+		container.NewVBox(
+			NewSearchForm(),
+			navigationButtons,
+		),
+		nil,
+		nil,
+		nil,
+		NewTable(),
 	)
 	return l
 }

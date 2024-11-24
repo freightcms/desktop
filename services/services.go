@@ -2,7 +2,7 @@ package services
 
 type (
 	Organization struct {
-		ID       interface{}
+		ID       string 
 		Name     string
 		DBA      string
 		RollupID string
@@ -14,9 +14,13 @@ type (
 	}
 
 	OrganizationService interface {
-		Get(criteria interface{}, fields []string)
-		Delete(id interface{})
-		Update(id interface{}, org Organization) error
-		Create(org UpsertOrganization) (id interface{})
+		// Get fetches all the organizations as transformed information that can
+		// be displayed in the lists or tables
+		Get(criteria interface{}, fields []string) []map[string]string
+		// Delete removes an organization from the list of items
+		Delete(id string) error
+		Update(id string, org Organization) error
+		// Get returns the 
+		Create(org UpsertOrganization) (id string)
 	}
 )
