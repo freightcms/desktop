@@ -26,34 +26,36 @@ func NewTable() fyne.CanvasObject {
 	}
 	updateCell := func(i widget.TableCellID, cell fyne.CanvasObject) {
 		record := data[i.Row]
-		var label *widget.Label
+		if cell == nil || record == nil {
+			return
+		}
+		logging.Logger.Debug("Row %d, Col %d with length", i.Row, i.Col, len(data))
 		switch i.Col {
 			case 0:
-				label = widget.NewLabel(record.ID)
+				label := widget.NewLabel(record.ID)
 				cell.(*fyne.Container).Add(label)
 				break
 			case 1:
-				label = widget.NewLabel(record.Name)
+				label := widget.NewLabel(record.Name)
 				cell.(*fyne.Container).Add(label)
 				break 
 			case 2:
 				if record.DBA == nil { 
-					label = widget.NewLabel("")
+					label := widget.NewLabel("")
 					cell.(*fyne.Container).Add(label)
 				} else {
-					label = widget.NewLabel(*record.DBA)
+					label := widget.NewLabel(*record.DBA)
 					cell.(*fyne.Container).Add(label)
 				}
 				break
 			case 3:
 				if record.RollupID == nil { 
-					label = widget.NewLabel("")
+					label := widget.NewLabel("")
 					cell.(*fyne.Container).Add(label)
 				} else {
-					label = widget.NewLabel(*record.RollupID)
+					label := widget.NewLabel(*record.RollupID)
 					cell.(*fyne.Container).Add(label)
 				}
-				cell.(*fyne.Container).Add(label)
 				break
 			case 4:
 				actionButtons := container.NewHBox(
